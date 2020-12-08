@@ -29,11 +29,19 @@ router.post('/create', upload.single('productImg'), async (req, res, next) => {
     ) {
       return res.send('you can only upload png and jpg files');
     }
+
+    const productImg = `${Date.now()}-${file.originalName}`;
     await pipeline(
       file.stream,
-      fs.createWriteStream(`./uploads/${Date.now()}-${file.originalName}`)
+      fs.createWriteStream(`./uploads/${productImg}`)
     );
-    const product = await Product.create(body);
+
+    const value = {
+      name: body.name,
+      productImg,
+      description: body.description,
+    };
+    const product = await Product.create(value);
     res.redirect(`/product/${product._id}`);
   } catch (error) {
     next(error);
