@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
 const productRoutes = require('./routes/product-routes');
+const userRoutes = require('./routes/user.routes');
 
 //initialize my express app
 const app = express();
@@ -20,9 +21,11 @@ app.set('views', path.join(__dirname, 'views'));
 
 //static middleware
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 /** product routes */
 app.use('/product', productRoutes);
+app.use('/api/user', userRoutes);
 
 /**my app routes */
 app.get('/', (req, res, next) => {
@@ -65,7 +68,7 @@ app.all('*', (req, res, next) => {
 
 //connecting my server to mongoose server
 mongoose
-  .connect('mongodb://127.0.0.1:27017/testDB', {
+  .connect('mongodb://127.0.0.1:27017/e_sales', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

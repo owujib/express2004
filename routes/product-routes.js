@@ -3,13 +3,13 @@ const multer = require('multer');
 const fs = require('fs');
 const { promisify } = require('util');
 const stream = require('stream');
-const pipeline = promisify(stream.pipeline);
+const pipeline = promisify(require('stream').pipeline);
 
 const Product = require('../models/Product');
 
 const router = express.Router();
 
-const upload = multer().single('productImg');
+const upload = multer();
 
 router.get('/create', (req, res, next) => {
   res.render('products/create.ejs', {
@@ -17,28 +17,27 @@ router.get('/create', (req, res, next) => {
   });
 });
 
-router.post('/create', (req, res, next) => {
-  upload(req, res, async (err) => {
-    try {
-      const { file, body } = req;
-      if (err) throw err;
-      //check if file is not an image
-      // if (
-      //   file.detectedFileExtension != '.jpg' ||
-      //   file.detectedFileExtension != '.png'
-      // ) {
-      //   return res.send('you can only upload png and jpg files');
-      // }
-      // await pipeline(
-      //   file.stream,
-      //   fs.createReadStream(`./uploads/${file.originalName}`)
-      // );
-      const product = await Product.create(req.body);
-      res.redirect(`/product/${product._id}`);
-    } catch (error) {
-      next(error);
+router.post('/create', upload.single('productImg'), async (req, res, next) => {
+  try {
+    const { file, body } = req;
+
+    console.log(file);
+    //check if file is not an image
+    if (
+      file.detectedFileExtension != '.jpg' &&
+      file.detectedFileExtension != '.png'
+    ) {
+      return res.send('you can only upload png and jpg files');
     }
-  });
+    await pipeline(
+      file.stream,
+      fs.createWriteStream(`./uploads/${Date.now()}-${file.originalName}`)
+    );
+    const product = await Product.create(body);
+    res.redirect(`/product/${product._id}`);
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/', async (req, res, next) => {
