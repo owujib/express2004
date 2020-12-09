@@ -12,6 +12,7 @@ const router = express.Router();
 const upload = multer();
 
 router.get('/create', upload.single('productImg'), (req, res, next) => {
+  console.log(req.file);
   res.render('products/create.ejs', {
     title: 'create product',
   });
