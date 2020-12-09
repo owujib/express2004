@@ -9,7 +9,11 @@
         <div class="card-header"><%=product.name%></div>
 
         <div class="card-body">
-          <img src="/<%=product.productImg%>" alt="..." class="card-img" />
+          <img
+            src="/uploads/<%=product.productImg%>"
+            alt="..."
+            class="card-img"
+          />
           <p><%= product.description%></p>
           <a href="/product/edit/<%=product._id%>" class="btn btn-secondary"
             >edit product</a

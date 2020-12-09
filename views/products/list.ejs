@@ -12,7 +12,11 @@
             <div class="card-header"><%=element.name%></div>
 
             <div class="card-body">
-              <img src="<%=element.productImg%>" alt="..." class="card-img" />
+              <img
+                src="/uploads/<%=element.productImg%>"
+                alt="..."
+                class="card-img"
+              />
               <p><%= element.description%></p>
               <a href="/product/<%=element._id%>" class="btn btn-secondary"
                 >view product</a

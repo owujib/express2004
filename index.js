@@ -20,8 +20,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 //static middleware
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'public'))); //file would be read from '/' route
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); //uploads would be read from '/uploads
 
 /** product routes */
 app.use('/product', productRoutes);
