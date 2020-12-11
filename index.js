@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user.routes');
+const ApiError = require('./utils/ApiError');
 
 //initialize my express app
 const app = express();
@@ -20,7 +21,19 @@ app.use('/api/user', userRoutes);
 
 //404 route
 app.all('*', (req, res, next) => {
-  res.send('404 page does not exist');
+  next(new ApiError('sorry route not found', 404));
+});
+
+//global error handler
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
+  res.status(err.statusCode).json({
+    status: err.status,
+    statusCode: err.statusCode,
+    message: err.message,
+    stack: err.stack,
+  });
 });
 
 //connecting my server to mongoose server

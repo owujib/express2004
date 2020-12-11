@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    role: {
+      type: String,
+      enum: ['admin', 'user'],
+      default: 'user',
+    },
     profileImg: {
       type: String,
     },
@@ -32,23 +37,28 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model('User', userSchema);
-
+/**encript users password before saving them */
 userSchema.pre('save', async function (next) {
   try {
     this.password = await bcrypt.hash(this.password, 12);
-    console.log(this.password);
     return this.password;
   } catch (error) {
     next(error);
   }
 });
 
+/**
+ * @param {string} inputPassword the password from request body
+ * @param {string} userPassword the existing user password from the database
+ */
 userSchema.methods.comparePassword = async function (
-  inputPassdword,
+  inputPassword,
   userPassword
 ) {
-  await bcrypt.compare(inputPassdword, userPassword);
-  return;
+  const compare = await bcrypt.compare(inputPassword, userPassword);
+  return compare;
 };
+
+const User = mongoose.model('User', userSchema);
+
 module.exports = User;
