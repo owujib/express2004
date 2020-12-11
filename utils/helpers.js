@@ -1,20 +1,20 @@
 const fs = require('fs');
+const { promisify } = require('util');
+const pipeline = promisify(require('stream').pipeline);
 
+/**
+ *
+ * @param {object} file file object from request object
+ * @param {string} dirPath path to store image /dirPath/filename
+ */
 exports.fileUploadStream = async (file, dirPath) => {
-  try {
-    if (file.detectedFileExtension != '.jpg')
-      next(new Error('invalid file type'));
+  // const filename = `${Date.now()}-${file.originalName}`;
 
-    const filename = `${Date.now()}-${file.originalName}`;
-
-    await pipeline(file.stream, fs.createWriteStream(dirPath));
-    return {
-      path: dirPath,
-      filename,
-    };
-  } catch (error) {
-    next(error);
-  }
+  await pipeline(file.stream, fs.createWriteStream(dirPath));
+  return {
+    path: dirPath,
+    message: 'usess',
+  };
 };
 
 // `./public/uploads/${filename}`
