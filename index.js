@@ -10,7 +10,7 @@ const productRoutes = require('./routes/product-routes');
 const app = express();
 
 //middlewares
-app.use(express.json());
+// app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 
@@ -20,6 +20,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 //static middleware
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 /** product routes */
 app.use('/product', productRoutes);

@@ -8,6 +8,8 @@ const productSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  color: [String],
+  gender: [String],
   productImg: {
     type: String,
   },

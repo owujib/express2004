@@ -5,13 +5,42 @@
     <%- include('../includes/navbar.ejs')%>
     <h1>create product</h1>
     <form
-      action=""
+      action="/product/create"
       enctype="multipart/form-data"
       method="POST"
       class="container"
     >
       <div class="form-group">
         <input type="text" name="name" id="name" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label
+          >Female:
+          <input type="checkbox" name="gender" value="female" />
+        </label>
+        <label for="">
+          Male
+          <input type="checkbox" name="gender" value="male" />
+        </label>
+      </div>
+      <div class="form-group">
+        Colors
+        <label
+          >red:
+          <input type="checkbox" name="color" value="female" />
+        </label>
+        <label for="">
+          green
+          <input type="checkbox" name="color" value="male" />
+        </label>
+        <label for="">
+          black
+          <input type="checkbox" name="color" value="black" />
+        </label>
+        <label for="">
+          white
+          <input type="checkbox" name="color" value="white" />
+        </label>
       </div>
       <div class="form-group">
         <textarea
