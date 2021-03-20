@@ -83,7 +83,7 @@ mongoose
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`server is running on 3000');
+  console.log('server is running on 3000');
 });
 
 //^2.0.0-rc.1
