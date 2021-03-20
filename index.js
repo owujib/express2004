@@ -67,7 +67,7 @@ app.all('*', (req, res, next) => {
 //connecting my server to mongoose server
 mongoose
   .connect(
-    'mmongodb+srv://admin:admin123456@cluster0.eyoxb.mongodb.net/teste?retryWrites=true&w=majority',
+    ' qmongodb+srv://admin:admin123456@cluster0.eyoxb.mongodb.net/teste?retryWrites=true&w=majority',
     {
       // .connect('mongodb://127.0.0.1:27017/testDB', {
       useNewUrlParser: true,
@@ -80,7 +80,7 @@ mongoose
   .catch((err) => console.log(err));
 
 //create my server
-const port = 3000;
+const port = proecess.env.NODE_ENV || 3000;
 
 app.listen(port, () => {
   console.log(`server is running on localhost:${port}`);
