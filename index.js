@@ -80,7 +80,7 @@ mongoose
   .catch((err) => console.log(err));
 
 //create my server
-const port = proecess.env.NODE_ENV || 3000;
+const port = process.env.NODE_ENV || 3000;
 
 app.listen(port, () => {
   console.log(`server is running on localhost:${port}`);
