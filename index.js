@@ -66,10 +66,14 @@ app.all('*', (req, res, next) => {
 
 //connecting my server to mongoose server
 mongoose
-  .connect('mongodb://127.0.0.1:27017/testDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    'mmongodb+srv://admin:admin123456@cluster0.eyoxb.mongodb.net/teste?retryWrites=true&w=majority',
+    {
+      // .connect('mongodb://127.0.0.1:27017/testDB', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then((res) => {
     console.log('database connection successful...');
   })
