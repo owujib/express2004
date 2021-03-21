@@ -4,6 +4,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
+require('dotenv').config();
+
 const productRoutes = require('./routes/product-routes');
 
 //initialize my express app
@@ -61,19 +63,23 @@ app.get('/api/student', (req, res, next) => {
 
 //404 route
 app.all('*', (req, res, next) => {
-  res.send('404 page does not exist');
+  res.render('404.ejs', {
+    title: '404 -page not found',
+  });
 });
 
 //connecting my server to mongoose server
+const checkDbConnectionString =
+  process.env.NODE_ENV !== 'production'
+    ? process.env.DB_LOCAL
+    : process.env.DB_URI;
+
 mongoose
-  .connect(
-    ' qmongodb+srv://admin:admin123456@cluster0.eyoxb.mongodb.net/teste?retryWrites=true&w=majority',
-    {
-      // .connect('mongodb://127.0.0.1:27017/testDB', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(checkDbConnectionString, {
+    // .connect('mongodb://127.0.0.1:27017/testDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then((res) => {
     console.log('database connection successful...');
   })

@@ -108,6 +108,8 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const product = await Product.findOneAndDelete({ _id: req.params.id });
     res.redirect('/product');
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 });
 module.exports = router;

@@ -3,21 +3,43 @@
   <%-include('../includes/head.ejs') %>
   <body>
     <%-include('../includes/navbar.ejs') %>
-    <h1 class="text-danger">product page</h1>
-    <div class="container-fluid">
-      <div class="card">
-        <div class="card-header"><%=product.name%></div>
 
-        <div class="card-body">
-          <img
-            src="/product-img/<%=product.productImg%>"
-            alt="..."
-            class="card-img"
-          />
-          <p><%= product.description%></p>
-          <a href="/product/edit/<%=product._id%>" class="btn btn-secondary"
-            >edit product</a
-          >
+    <div class="container-fluid mt-5 mb-5">
+      <div class="card">
+        <div class="row">
+          <div class="col-md-5">
+            <img
+              src="/product-img/<%=product.productImg%>"
+              alt="..."
+              class="card-img img-fluid"
+            />
+          </div>
+          <div class="col-md-7">
+            <div class="card-header text-center">
+              <h4 class="text-center text-capitalize"><%=product.name%></h4>
+            </div>
+
+            <div class="card-body">
+              <p class="text-left"><%= product.description%></p>
+              <div>
+                <span>Colors:</span>
+                <% product.color.map((item)=>{ %>
+                <li><%=item%></li>
+
+                <%}) %>
+              </div>
+              <div class="mb-4">
+                <span>Gender:</span>
+                <% product.gender.map((item)=>{ %>
+                <li><%=item%></li>
+
+                <%}) %>
+              </div>
+              <a href="/product/edit/<%=product._id%>" class="btn btn-secondary"
+                >edit product</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
